@@ -1,0 +1,6 @@
+<div class="form-group">
+    <label class="col-form-label col-form-label-lg" for="inputLarge">nick:</label>
+    <input [(ngModel)]="nick" (keyup)="$event.keyCode==13"
+         class="form-control form-control-lg" placeholder="Nick" id="inputLarge" type="text">
+     <button (click)="registerFunc()" type="button" class="btn btn-success">Next</button>
+</div>

@@ -1,0 +1,21 @@
+
+.topicholder h2{
+   margin-top: 0px;
+
+}
+.threads{
+    margin-top: 50px;
+    min-height: 100px;
+    border-top: 3px solid black;
+    
+}
+
+#entry{
+    margin:0;
+    font-size: 20px;
+}
+#author{
+    float:right;
+    margin:0;
+    margin-right: 10px;
+}

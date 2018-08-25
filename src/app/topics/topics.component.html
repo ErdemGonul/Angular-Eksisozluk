@@ -1,0 +1,4 @@
+<div  class="row" *ngFor="let topic of topics;let i=index">
+  <a routerLink="../{{topic}}" (click)="toTopic($event.target.innerText)" >{{topic}}</a> 
+
+  </div>

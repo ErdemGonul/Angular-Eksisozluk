@@ -1,0 +1,14 @@
+<div class="form-group">
+    <label class="col-form-label col-form-label-lg" for="inputLarge">Konu Başlığı:</label>
+    <input [(ngModel)]="topicname" (keyup)="$event.keyCode==13"
+         class="form-control form-control-lg" placeholder="Konu" id="inputLarge" type="text">
+
+         <label class="col-form-label col-form-label-lg" for="inputLarge">İlk Entry:</label>
+         <input [(ngModel)]="firstthreadname" (keyup)="$event.keyCode==13"
+              class="form-control form-control-lg" placeholder="Entry" id="inputLarge" type="text">
+              <label class="col-form-label col-form-label-lg" for="inputLarge">Yazar:</label>
+              <input [(ngModel)]="nick" (keyup)="$event.keyCode==13"
+                   class="form-control form-control-lg" placeholder="Yazar" id="inputLarge" type="text">
+
+     <button (click)="topicCreateFunc()" type="button" class="btn btn-success">Next</button>
+</div>

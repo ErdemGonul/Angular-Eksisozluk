@@ -1,0 +1,42 @@
+.listsign{
+    list-style: none;
+    margin-bottom: auto;
+    margin-top:auto;
+}
+.listsign ul{
+    display: inline;
+}
+.col-xs-6{
+
+    height: 100px;
+}
+#leftbar {
+    position: fixed;
+    top: 140px;
+    margin-bottom: 0;
+    bottom: 0;
+    width:300px;
+    height:500px;
+    margin-top: 0px;
+}
+#container{
+position: relative;
+    width: 100%;
+
+margin: 0 auto;
+margin-left: 0px;
+margin-right: 0px;
+padding-left: 60px;
+
+
+
+
+
+
+margin-top:140px;
+}
+#inside{
+    margin-top: 0px;
+    width:800px;
+    margin-left: 300px;
+}

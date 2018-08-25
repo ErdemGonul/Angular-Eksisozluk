@@ -1,0 +1,24 @@
+
+.form-group label,input{
+    width:50%;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    font-size: 30px;
+}
+.form-group input{
+    height: 45px;
+    border-radius: 5px;
+}
+.form-group button{
+    width: 50%;
+    font-size: 30px;
+    border-radius: 10px;
+}
+.form-group > *{
+    margin-bottom: 40px;
+}
+.form-group { 
+    margin-top: 5px;
+    text-align: center;
+    
+}

@@ -1,0 +1,21 @@
+
+<div class="topicholder">
+    
+   
+    <h2>{{topic}}</h2>
+    <div class="threads" *ngFor="let thread of threadlist;let i=index">
+        
+
+      <div id="entry" class="row">
+          {{thread.content}}
+
+      </div>
+      <div  id="author"class="row">
+          {{thread.username}} 
+
+      </div>
+     
+       </div>
+
+
+</div>
