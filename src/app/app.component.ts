@@ -8,13 +8,14 @@ import {ServerService} from './server.service';
 })
 export class AppComponent {
   title = 'angularyafi';
-  topics=[];
   constructor(private router:Router,private serverservice:ServerService) {
    
       }
    
   toMainPage(){
+    
     this.router.navigateByUrl('home');
+    
 }
   refresh(){
     window.location.reload();
@@ -22,13 +23,7 @@ export class AppComponent {
 
 ngOnInit() {
 
-  this.serverservice.getTopics().subscribe((topic) => {
-    topic.forEach(element => {
-      this.topics.push(element['name']);
-      this.serverservice.topiclist.push(element['name']);
-      var urlTree = this.router.createUrlTree([element['name']]);
-    });
-  });
+  
 }
 
 }

@@ -14,13 +14,7 @@ export class CreatetopicComponent implements OnInit {
   firstthreadname;
   nick;
 
-  constructor(private router: Router,private server:ServerService) { this.router.events.subscribe(params => {
-    if(params instanceof NavigationEnd) {
-      
-      this.ngOnInit();
-    }
-   
-  });
+  constructor(private router: Router,private server:ServerService) { 
     }
 
 
@@ -32,7 +26,7 @@ export class CreatetopicComponent implements OnInit {
 
     this.server.createTopic(this.topicname,this.nick);
     console.log("cagırdım");
-    this.router.navigateByUrl('');
+    
     
   }
 }

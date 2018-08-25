@@ -4,7 +4,7 @@ import{TopicComponentComponent} from './topic-component/topic-component.componen
 import{RegisterComponent} from './register/register.component';
 import{CreatetopicComponent} from './createtopic/createtopic.component';
 const routes: Routes = [
-  
+  {path : "",component:TopicComponentComponent},
   { path: 'home', component:TopicComponentComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'createtopic', component:CreatetopicComponent},

@@ -8,21 +8,25 @@ import { AppRoutingModule } from './/app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { CreatetopicComponent } from './createtopic/createtopic.component';
 import { TopicsComponent } from './topics/topics.component';
+import {ServerService} from './server.service';
+import { ThreadcreatorComponent } from './threadcreator/threadcreator.component';
 @NgModule({
   declarations: [
     AppComponent,
     TopicComponentComponent,
     RegisterComponent,
     CreatetopicComponent,
-    TopicsComponent
+    TopicsComponent,
+    ThreadcreatorComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
+  
   ],
-  providers: [],
+  providers: [ServerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

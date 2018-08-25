@@ -30,11 +30,28 @@ export class TopicComponentComponent implements OnInit {
     
 
  }
- 
+ respawner(){
+   this.threadlist=[];
+   console.log("spawnlıyom");
+   this.ngOnInit();
+ }
+ randomInitializer(){
+   console.log("bu",this.serverservice.topiclist.length);
+    return Math.floor((Math.random()*this.serverservice.topiclist.length));
+ }
   ngOnInit() {
-
+    console.log("iştebu1",this.serverservice.topiclist);
+    console.log("ee",Object.keys(this.serverservice.topiclist).length);
     this.topic=this.serverservice.topicid;
-    
+    if(this.router.url=="/" || this.router.url=="/home"){
+     
+      this.serverservice.topicid=this.serverservice.topiclist[this.randomInitializer()];
+      console.log(this.randomInitializer);
+      console.log(this.serverservice.topicid ,"bunu aldım");
+      this.topic=this.serverservice.topicid;
+      console.log("girdim");
+    }
+    console.log("iştebu2",this.serverservice.topiclist);
     this.serverservice.getThreads().subscribe((threads) => {
      if(threads!=null){
       threads.forEach(element => {
@@ -50,6 +67,7 @@ export class TopicComponentComponent implements OnInit {
     
      }
     });
+    
   
   }
 
