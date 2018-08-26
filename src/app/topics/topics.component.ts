@@ -26,20 +26,12 @@ export class TopicsComponent implements OnInit {
   toTopic(url){
 
     this.serverservice.topicid=url;
-    console.log(this.serverservice.topicid);
   }
   ngOnInit() {
     this.serverservice.getTopics().subscribe((res)=>{
        
-      res.forEach(element => {
-        if(!this.serverservice.topiclist.includes(element['name'])){
-        this.serverservice.topiclist.push(element['name']);
-        console.log("sayı artıor");
-        var urlTree = this.router.createUrlTree([element['name']]);
-        }
-      });
+    
       this.topics=this.serverservice.topiclist;
-      console.log(this.serverservice.topiclist);
       
       
     });

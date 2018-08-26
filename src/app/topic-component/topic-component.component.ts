@@ -16,9 +16,10 @@ import { NavigationEnd } from '@angular/router/';
 export class TopicComponentComponent implements OnInit {
   href=window.location.href;
   threadlist:Thread[]=[];
-  
+  topiclist=[];
   topic;
-  constructor(private serverservice:ServerService,private router:Router) {
+ onetime=true;
+  constructor(private serverservice:ServerService,private router:Router,private http: HttpClient) {
     this.router.events.subscribe(params => {
       if(params instanceof NavigationEnd) {
         this.threadlist=[];
@@ -32,27 +33,44 @@ export class TopicComponentComponent implements OnInit {
  }
  respawner(){
    this.threadlist=[];
-   console.log("spawnlıyom");
    this.ngOnInit();
  }
  randomInitializer(){
-   console.log("bu",this.serverservice.topiclist.length);
     return Math.floor((Math.random()*this.serverservice.topiclist.length));
  }
+ linkgetter(){
+   return window.location.href.slice(window.location.href.lastIndexOf('/'),window.location.href.length);
+ }
   ngOnInit() {
-    console.log("iştebu1",this.serverservice.topiclist);
-    console.log("ee",Object.keys(this.serverservice.topiclist).length);
+   
     this.topic=this.serverservice.topicid;
-    if(this.router.url=="/" || this.router.url=="/home"){
+    
+    this.serverservice.getTopics().subscribe((topics) => {
      
-      this.serverservice.topicid=this.serverservice.topiclist[this.randomInitializer()];
-      console.log(this.randomInitializer);
-      console.log(this.serverservice.topicid ,"bunu aldım");
-      this.topic=this.serverservice.topicid;
-      console.log("girdim");
-    }
-    console.log("iştebu2",this.serverservice.topiclist);
-    this.serverservice.getThreads().subscribe((threads) => {
+      if((this.router.url=="/" || this.router.url=="/home")&& this.onetime==true){
+        
+        this.serverservice.topicid=this.serverservice.topiclist[this.randomInitializer()];
+        console.log("al bunu",this.serverservice.topicid);
+        this.topic=this.serverservice.topicid;
+
+
+        this.serverservice.getThreads(this.topic).subscribe((threads) => {
+          if(threads!=null ){
+           threads.forEach(element => {
+             var currentThread=new Thread();
+             currentThread.username=element['username'];
+             currentThread.topicid=element['topicId'];
+             currentThread.content=element['content'];
+             this.threadlist.push(currentThread);
+           });
+           console.log(threads);
+           
+          }
+         });
+         this.onetime=false;}
+     });
+    this.serverservice.getThreads(this.linkgetter()).subscribe((threads) => {
+      console.log(this.linkgetter());
      if(threads!=null){
       threads.forEach(element => {
         var currentThread=new Thread();
@@ -60,15 +78,9 @@ export class TopicComponentComponent implements OnInit {
         currentThread.topicid=element['topicId'];
         currentThread.content=element['content'];
         this.threadlist.push(currentThread);
-        console.log(currentThread);
-     
       });
-     
-    
      }
     });
-    
-  
   }
 
 
