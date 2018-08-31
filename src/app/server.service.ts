@@ -62,7 +62,7 @@ export class ServerService {
         }
       );
     }
-    createTopic(topicname,nick){
+    createTopic(topicname,nick,thread){
       const req = this.http.post('http://127.0.0.1:8080/topic',
       {
         "name":topicname,
@@ -74,7 +74,9 @@ export class ServerService {
           res => {
            
             console.log(res);
-            window.location.replace("http://localhost:4200");
+            
+            this.createThread(nick,thread,topicname)
+            //window.location.replace("http://localhost:4200");
           },
           err => {
             console.log("Error occured");
@@ -92,9 +94,9 @@ export class ServerService {
       )
           .subscribe(
             res => {
-             
+             console.log(topic);
               console.log("iş tamamdır");
-              window.location.reload();
+              window.location.replace("http:///localhost:4200/" + topic);
             },
             err => {
               console.log("Error occured");

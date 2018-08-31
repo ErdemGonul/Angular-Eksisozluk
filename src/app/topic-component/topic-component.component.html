@@ -19,4 +19,4 @@
 
 
 </div>
-<app-threadcreator (myEvent)="respawner()"></app-threadcreator>
+<app-threadcreator  *ngIf="topic!=null" (myEvent)="respawner()"></app-threadcreator>
