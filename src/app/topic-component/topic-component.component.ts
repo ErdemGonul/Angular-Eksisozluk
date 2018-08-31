@@ -6,6 +6,7 @@ import { Thread } from '../thread';
 import { Router } from '@angular/router';
 import { NavigationStart } from '@angular/router';
 import { NavigationEnd } from '@angular/router/';
+import { currentId } from 'async_hooks';
 @Component({
   selector: 'app-topic-component',
   templateUrl: './topic-component.component.html',
@@ -50,7 +51,6 @@ export class TopicComponentComponent implements OnInit {
       if((this.router.url=="/" || this.router.url=="/home")&& this.onetime==true){
         
         this.serverservice.topicid=this.serverservice.topiclist[this.randomInitializer()];
-        console.log("al bunu",this.serverservice.topicid);
         this.topic=this.serverservice.topicid;
 
 
@@ -63,21 +63,22 @@ export class TopicComponentComponent implements OnInit {
              currentThread.content=element['content'];
              this.threadlist.push(currentThread);
            });
-           console.log(threads);
            
           }
          });
          this.onetime=false;}
      });
     this.serverservice.getThreads(this.linkgetter()).subscribe((threads) => {
-      console.log(this.linkgetter());
+      
      if(threads!=null){
+      this.threadlist=[];
       threads.forEach(element => {
         var currentThread=new Thread();
         currentThread.username=element['username'];
-        currentThread.topicid=element['topicId'];
+        currentThread.topicid=element['topicName'];
         currentThread.content=element['content'];
         this.threadlist.push(currentThread);
+        this.topic=currentThread.topicid;
       });
      }
     });

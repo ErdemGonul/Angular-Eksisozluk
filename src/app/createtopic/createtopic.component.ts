@@ -26,7 +26,7 @@ export class CreatetopicComponent implements OnInit {
 
     this.server.createTopic(this.topicname,this.nick);
     console.log("cagırdım");
-    
+    //window.location.replace("http://localhost:4200");
     
   }
 }

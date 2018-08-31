@@ -44,7 +44,6 @@ export class ServerService {
   }
 
   getThreads(x:string):Observable<any>{
-    console.log("gelen budur",x);
     
     
     return this.http.get('http://127.0.0.1:8080/topic/' + x);  
@@ -69,12 +68,13 @@ export class ServerService {
         "name":topicname,
         "createdBy": nick
       }
+      
     )
         .subscribe(
           res => {
            
             console.log(res);
-           
+            window.location.replace("http://localhost:4200");
           },
           err => {
             console.log("Error occured");
@@ -94,6 +94,7 @@ export class ServerService {
             res => {
              
               console.log("iş tamamdır");
+              window.location.reload();
             },
             err => {
               console.log("Error occured");
