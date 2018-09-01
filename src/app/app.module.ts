@@ -10,6 +10,7 @@ import { CreatetopicComponent } from './createtopic/createtopic.component';
 import { TopicsComponent } from './topics/topics.component';
 import {ServerService} from './server.service';
 import { ThreadcreatorComponent } from './threadcreator/threadcreator.component';
+import { SigninComponent } from './signin/signin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,7 +18,8 @@ import { ThreadcreatorComponent } from './threadcreator/threadcreator.component'
     RegisterComponent,
     CreatetopicComponent,
     TopicsComponent,
-    ThreadcreatorComponent
+    ThreadcreatorComponent,
+    SigninComponent
   ],
   imports: [
     BrowserModule,

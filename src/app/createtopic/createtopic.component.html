@@ -9,6 +9,9 @@
               <label class="col-form-label col-form-label-lg" for="inputLarge">Yazar:</label>
               <input [(ngModel)]="nick" (keyup)="$event.keyCode==13"
                    class="form-control form-control-lg" placeholder="Yazar" id="inputLarge" type="text">
+                   <label class="col-form-label col-form-label-lg" for="inputLarge">password:</label>
+              <input [(ngModel)]="password" (keyup)="$event.keyCode==13"
+                   class="form-control form-control-lg" placeholder="password" id="inputLarge" type="text">
 
      <button (click)="topicCreateFunc()" type="button" class="btn btn-success">Next</button>
 </div>

@@ -23,6 +23,7 @@ export class ThreadcreatorComponent implements OnInit {
   constructor(private serverservice:ServerService) { }
 
   ngOnInit() {
+  
   }
 
   sendEntry(){

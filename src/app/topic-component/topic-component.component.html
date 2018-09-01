@@ -5,18 +5,24 @@
     <h2>{{topic}}</h2>
     <div class="threads" *ngFor="let thread of threadlist;let i=index">
         
-
+       
       <div id="entry" class="row">
           {{thread.content}}
 
       </div>
-      <div  id="author"class="row">
+      <div id="detailsentry"  class="col-lg-6">
+      <div id="buttons"  class="col-lg-6">
+
+        <button (click)="likeFunc()" type="button" class="btn btn-success">+</button>
+        <button type="button" class="btn btn-success">-</button>
+    </div>
+      <div  id="author"class="col">
           {{thread.username}} 
 
       </div>
-     
+    </div>
        </div>
 
 
 </div>
-<app-threadcreator  *ngIf="topic!=null" (myEvent)="respawner()"></app-threadcreator>
+<app-threadcreator id="entrycreator" *ngIf="topic!=null" (myEvent)="respawner()"></app-threadcreator>

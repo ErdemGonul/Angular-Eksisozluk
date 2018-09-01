@@ -1,4 +1,6 @@
-
+.topicholder{
+    margin-bottom: 100px;
+}
 .topicholder h2{
    margin-top: 0px;
 
@@ -6,7 +8,8 @@
 .threads{
     margin-top: 50px;
     min-height: 100px;
-    border-top: 3px solid black;
+    padding-top: 15px;
+    border-top: 1px solid black;
     
 }
 
@@ -15,7 +18,29 @@
     font-size: 20px;
 }
 #author{
-    float:right;
-    margin:0;
-    margin-right: 10px;
+    float: right;
+    line-height: 32px;
+    
+    
+}
+#buttons{
+    float: left;
+    
+}
+#buttons button{
+    width: 32px;
+    text-align: center;
+    height:32px;    
+   font-size: 20px;
+   line-height: 100%;
+   margin-right: 30px;
+}
+#detailsentry{
+    padding-left: 0px;
+    margin-top: 30px;
+    height:50px;
+    width:100%;
+}
+.col-lg-6{
+    padding-left: 0px;
 }

@@ -21,7 +21,9 @@ export class TopicsComponent implements OnInit {
       
    });
   }
-
+  refresh(){
+    window.location.reload();
+  }
   
   toTopic(url){
 

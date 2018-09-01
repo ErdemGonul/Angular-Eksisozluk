@@ -9,7 +9,7 @@ import {ServerService} from '../server.service';
 export class RegisterComponent implements OnInit {
 
   nick:string;
-
+  password:string;
   constructor(private router: Router,private server:ServerService) { }
 
   ngOnInit() {
@@ -17,7 +17,7 @@ export class RegisterComponent implements OnInit {
 
   registerFunc(){
     
-      this.server.createUser(this.nick);
+      this.server.createUser(this.nick,this.password);
       console.log("cagırdım");
     this.router.navigateByUrl('');
   }

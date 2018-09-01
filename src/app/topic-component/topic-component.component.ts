@@ -6,7 +6,7 @@ import { Thread } from '../thread';
 import { Router } from '@angular/router';
 import { NavigationStart } from '@angular/router';
 import { NavigationEnd } from '@angular/router/';
-import { currentId } from 'async_hooks';
+
 @Component({
   selector: 'app-topic-component',
   templateUrl: './topic-component.component.html',
@@ -40,7 +40,10 @@ export class TopicComponentComponent implements OnInit {
     return Math.floor((Math.random()*this.serverservice.topiclist.length));
  }
  linkgetter(){
-   return window.location.href.slice(window.location.href.lastIndexOf('/'),window.location.href.length);
+   return window.location.href.slice(window.location.href.lastIndexOf('/')+1,window.location.href.length);
+ }
+ likeFunc(){
+   this.serverservice.like();
  }
   ngOnInit() {
    
