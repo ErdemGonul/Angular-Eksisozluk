@@ -12,14 +12,8 @@ import { EventEmitter } from '@angular/core';
 })
 export class ThreadcreatorComponent implements OnInit {
   @Input() topicComponent: TopicComponentComponent;
-  nick:string;
   thread:string;
-  @Output() myEvent = new EventEmitter<string>();
 
-  callParent() {
-    console.log("yapıyop z bişiler");
-    this.myEvent.emit('eventDesc');
-  }
   constructor(private serverservice:ServerService) { }
 
   ngOnInit() {
@@ -27,10 +21,7 @@ export class ThreadcreatorComponent implements OnInit {
   }
 
   sendEntry(){
-    
-    this.serverservice.createThread(this.nick,this.thread,this.serverservice.topicid);
-    this.callParent();
-    this.nick="";
+    this.serverservice.createThread(this.thread,this.serverservice.topicid);
     this.thread="";
   }
 

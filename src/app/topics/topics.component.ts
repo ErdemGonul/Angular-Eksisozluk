@@ -16,28 +16,20 @@ export class TopicsComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
        this.ngOnInit();
-      
       }
-      
    });
   }
   refresh(){
     console.log("yenilense");
     this.ngOnInit();
-
   }
   
   toTopic(url){
-
     this.serverservice.topicid=url;
   }
   ngOnInit() {
     this.serverservice.getTopics().subscribe((res)=>{
-       
-    
       this.topics=this.serverservice.topiclist;
-      
-      
     });
   
 

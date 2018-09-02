@@ -13,13 +13,11 @@ export class AppComponent {
   title = 'angularyafi';
   constructor(private router:Router,private serverservice:ServerService) {
    
-      }
+    }
    
   toMainPage(){
-    
     this.router.navigateByUrl('home');
-    
-}
+  }
 
   signout(){
     localStorage.setItem("signed",null);

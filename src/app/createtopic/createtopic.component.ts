@@ -12,10 +12,9 @@ export class CreatetopicComponent implements OnInit {
 
   topicname;
   firstthreadname;
-  nick;
-  password;
+
   constructor(private router: Router,private server:ServerService) { 
-    }
+  }
 
 
   ngOnInit() {
@@ -23,11 +22,7 @@ export class CreatetopicComponent implements OnInit {
 
 
   topicCreateFunc(){
-    
-    this.server.createTopic(this.topicname,this.nick,this.password,this.firstthreadname);
-    console.log("cagırdım");
-  
-    
+    this.server.createTopic(this.topicname,this.firstthreadname);
   }
 }
 

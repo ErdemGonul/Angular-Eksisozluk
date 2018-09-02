@@ -31,60 +31,18 @@ export class ServerService {
   }
 
   constructor(private router:Router,  private http: HttpClient) { 
-    
-     
       this.signed=JSON.parse(localStorage.getItem("signed"));
-      httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa("user"+ ":" +"user"));
-      console.log("girim");
-    
-}
-
-
-  getTopics():Observable<any>{
-    return this.http.get('http://127.0.0.1:8080/topics').pipe(
-
-    map( result => {
-      
-        let data = JSON.stringify(result);
-        var x=JSON.parse(data);
-
-        for (var i = 0, l = x.length; i < l; i++) {
-          if(!this.topiclist.includes(x[i].name)){
-          var obj = x[i].name;
-          this.topiclist.push(obj);
-         
-          let urlTree = this.router.createUrlTree([obj]);
-      }}
-
-
-     return result;
-    })
-
-  
-    );
-  }
-
-  getThreads(x:string):Observable<any>{
-    
-    return this.http.get('http://127.0.0.1:8080/topic/' + x);  
-    
+      httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa(this.signed.username+ ":" +this.signed.password)); 
   }
   signControl(nick,password){
     httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa(nick + ":" + password));
     console.log(".agıırram");
-    const req = this.http.post('http://127.0.0.1:8080/login',{},httpOptions
-    
-    
-  )
-      .subscribe(
+    const req = this.http.post('http://127.0.0.1:8080/login',{},httpOptions).subscribe(
         res => {
-         console.log("signed in as ",nick);
           var token="Basic" + btoa(nick+": "+password);
           localStorage.setItem("signed",JSON.stringify({ "username": nick,"password":password, "token": token})); 
           this.signed=JSON.parse(localStorage.getItem("signed"));
-         
-          httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa(nick + ":" + password)); 
-          console.log(this.signed.token);
+          httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa(this.signed.username + ":" + this.signed.password)); 
           this.router.navigateByUrl('/');
         },
         err => {
@@ -93,10 +51,7 @@ export class ServerService {
       );
     }
 
-    readThreadsFromUser(username):Observable<any>{
 
-      return this.http.get("http://127.0.0.1:8080/thread/" + username);
-    }
   
 
   createUser(nick,password){
@@ -105,85 +60,91 @@ export class ServerService {
       "password": password
     })
       .subscribe(
-        res => {
-          console.log(res);
-        },
+        res => {},
         err => {
           console.log("Error occured");
         }
       );
     }
-    createTopic(topicname,nick,password,thread){
+
+    createTopic(topicname,thread){
      
-      console.log(btoa("user:user"));
       const req = this.http.post('http://127.0.0.1:8080/topic',
       {
         "name":topicname,
-        "createdBy": nick
+        "createdBy": this.signed.username
       },httpOptions
-      
     )
         .subscribe(
           res => {
-           
-            console.log(res,"offofofof");
             this.topicid=topicname;
-            this.createThread(nick,thread,topicname)
+            this.createThread(thread,topicname)
             this.router.navigateByUrl(topicname);
           },
           err => {
             console.log("Error occured");
-          }
-        );
+          });
       }
 
-      createThread(nick,thread,topic){
-        
-        
-        console.log('Authorization',"Basic " + btoa(nick + ":" +"user"));
+      createThread(thread,topic){
+
         const req = this.http.post('http://127.0.0.1:8080/thread',
         {
           "content": thread,
           "topicName": topic,
-          "username": nick
+          "username": this.signed.username
         },httpOptions
       )
           .subscribe(
             res => {
-            console.log(topic);
              this.callComponent();
-           // window.location.replace("http:///localhost:4200/" + topic);
             },
             err => {
               console.log("Error occured");
-            }
-          );
+            });
       }
-      like(threadid){
-        
-        console.log(httpOptions.headers);
-        const req = this.http.post('http://127.0.0.1:8080/likethread/' + threadid,{}
-        ,httpOptions
-        
-      )
-          .subscribe(
-            res => {
-             console.log("begendim",res);
-             
-            },
-            err => {
-              console.log("Couldnt liked.");
-            }
-          );
-        }
+
+      
     
       
     ngOnInit(){
-     
-      
-       
+
+    }
+    like(threadid){
         
+      const req = this.http.post('http://127.0.0.1:8080/likethread/' + threadid,{}
+      ,httpOptions        
+    )
+        .subscribe(
+          res => {
+           console.log("begendim",res);
+          },
+          err => {
+            console.log("Couldnt liked.");
+          });
+      }
+    readThreadsFromUser(username):Observable<any>{
+      return this.http.get("http://127.0.0.1:8080/thread/" + username);
+    }
+    getTopics():Observable<any>{
+      return this.http.get('http://127.0.0.1:8080/topics').pipe(
+  
+      map( result => {
         
-      
+          let data = JSON.stringify(result);
+          var x=JSON.parse(data);
+  
+          for (var i = 0, l = x.length; i < l; i++) {
+            if(!this.topiclist.includes(x[i].name)){
+            var obj = x[i].name;
+            this.topiclist.push(obj);
+            let urlTree = this.router.createUrlTree([obj]);
+        }}
+       return result;
+      })
+      );
+    }
+    getThreads(x:string):Observable<any>{
+      return this.http.get('http://127.0.0.1:8080/topic/' + x);  
     }
 }

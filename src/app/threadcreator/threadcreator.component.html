@@ -1,9 +1,5 @@
 <div class="form-group">
-  <label class="col-form-label col-form-label-lg" for="inputLarge">nick:</label>
-  <input [(ngModel)]="nick" (keyup)="$event.keyCode==13"
-       class="form-control form-control-lg" placeholder="Nick" id="inputLarge" type="text">
-
-       <label class="col-form-label col-form-label-lg" for="inputLarge">entry:</label>
-       <textarea [(ngModel)]="thread" class="form-control" rows="5" id="comment"></textarea>
-   <button (click)="sendEntry()" type="button" class="btn btn-success">Next</button>
+      <label class="col-form-label col-form-label-lg" for="inputLarge">entry:</label>
+      <textarea [(ngModel)]="thread" class="form-control" rows="5" id="comment"></textarea>
+      <button (click)="sendEntry()" type="button" class="btn btn-success">Next</button>
 </div>

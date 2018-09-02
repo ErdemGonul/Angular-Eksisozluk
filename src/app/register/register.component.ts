@@ -16,9 +16,7 @@ export class RegisterComponent implements OnInit {
   }
 
   registerFunc(){
-    
-      this.server.createUser(this.nick,this.password);
-      console.log("cagırdım");
+    this.server.createUser(this.nick,this.password);
     this.router.navigateByUrl('');
   }
 

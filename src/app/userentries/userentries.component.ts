@@ -16,13 +16,10 @@ export class UserentriesComponent implements OnInit {
   }
 
   ngOnInit() {
-    
-
+  
     this.serverservice.readThreadsFromUser(this.username).subscribe((entrylist)=>{
      
-      console.log("eeee");
       if(entrylist!=null ){
-        console.log("bura iyi");
         entrylist.forEach(element => {
           var currentThread=new Thread();
           currentThread.username=element['username'];
@@ -30,14 +27,9 @@ export class UserentriesComponent implements OnInit {
           currentThread.content=element['content'];
           this.entries.push(currentThread);
         });
-        
-       }
-      
-    });
-  
+       }});
   }
   toTopic(url){
-
     this.router.navigateByUrl("/" + url);
   }
 
