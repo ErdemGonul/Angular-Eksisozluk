@@ -27,8 +27,11 @@ export class ThreadcreatorComponent implements OnInit {
   }
 
   sendEntry(){
+    
     this.serverservice.createThread(this.nick,this.thread,this.serverservice.topicid);
     this.callParent();
+    this.nick="";
+    this.thread="";
   }
 
 }

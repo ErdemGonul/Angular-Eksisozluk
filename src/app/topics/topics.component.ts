@@ -22,7 +22,9 @@ export class TopicsComponent implements OnInit {
    });
   }
   refresh(){
-    window.location.reload();
+    console.log("yenilense");
+    this.ngOnInit();
+
   }
   
   toTopic(url){

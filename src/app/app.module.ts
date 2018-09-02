@@ -11,6 +11,7 @@ import { TopicsComponent } from './topics/topics.component';
 import {ServerService} from './server.service';
 import { ThreadcreatorComponent } from './threadcreator/threadcreator.component';
 import { SigninComponent } from './signin/signin.component';
+import { UserentriesComponent } from './userentries/userentries.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +20,8 @@ import { SigninComponent } from './signin/signin.component';
     CreatetopicComponent,
     TopicsComponent,
     ThreadcreatorComponent,
-    SigninComponent
+    SigninComponent,
+    UserentriesComponent
   ],
   imports: [
     BrowserModule,

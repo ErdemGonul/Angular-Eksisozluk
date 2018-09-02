@@ -23,10 +23,10 @@ export class CreatetopicComponent implements OnInit {
 
 
   topicCreateFunc(){
-
+    
     this.server.createTopic(this.topicname,this.nick,this.password,this.firstthreadname);
     console.log("cagırdım");
-    //window.location.replace("http://localhost:4200");
+  
     
   }
 }

@@ -5,6 +5,7 @@ import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { map, filter, catchError, mergeMap,share } from 'rxjs/operators';
 import { DebugContext } from '@angular/core/src/view';
+import { Subject } from 'rxjs/internal/Subject';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -20,7 +21,21 @@ export class ServerService {
   
   topiclist:string[]=[];
   topicid:string;
+  signed;
+  callTopicComponent=new Subject<any>();
+  componentcalled=this.callTopicComponent.asObservable();
+
+
+  callComponent(){
+    this.callTopicComponent.next();
+  }
+
   constructor(private router:Router,  private http: HttpClient) { 
+    
+     
+      this.signed=JSON.parse(localStorage.getItem("signed"));
+      httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa("user"+ ":" +"user"));
+      console.log("girim");
     
 }
 
@@ -50,22 +65,27 @@ export class ServerService {
   }
 
   getThreads(x:string):Observable<any>{
-    console.log(x);
     
     return this.http.get('http://127.0.0.1:8080/topic/' + x);  
+    
   }
   signControl(nick,password){
-   
+    httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa(nick + ":" + password));
     console.log(".agıırram");
-    const req = this.http.post('http://127.0.0.1:8080/login',{}
-    ,httpOptions
+    const req = this.http.post('http://127.0.0.1:8080/login',{},httpOptions
+    
     
   )
       .subscribe(
         res => {
          console.log("signed in as ",nick);
-         var token="Basic" + btoa(nick+":"+password);
-          localStorage.setItem("signed",JSON.stringify({ "nick": nick, "token": token}));
+          var token="Basic" + btoa(nick+": "+password);
+          localStorage.setItem("signed",JSON.stringify({ "username": nick,"password":password, "token": token})); 
+          this.signed=JSON.parse(localStorage.getItem("signed"));
+         
+          httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa(nick + ":" + password)); 
+          console.log(this.signed.token);
+          this.router.navigateByUrl('/');
         },
         err => {
           console.log("Couldnt signed.");
@@ -73,7 +93,10 @@ export class ServerService {
       );
     }
 
-    
+    readThreadsFromUser(username):Observable<any>{
+
+      return this.http.get("http://127.0.0.1:8080/thread/" + username);
+    }
   
 
   createUser(nick,password){
@@ -91,7 +114,7 @@ export class ServerService {
       );
     }
     createTopic(topicname,nick,password,thread){
-      httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa(nick+":"+password));
+     
       console.log(btoa("user:user"));
       const req = this.http.post('http://127.0.0.1:8080/topic',
       {
@@ -103,10 +126,10 @@ export class ServerService {
         .subscribe(
           res => {
            
-            console.log(res);
-            
+            console.log(res,"offofofof");
+            this.topicid=topicname;
             this.createThread(nick,thread,topicname)
-            //window.location.replace("http://localhost:4200");
+            this.router.navigateByUrl(topicname);
           },
           err => {
             console.log("Error occured");
@@ -115,8 +138,9 @@ export class ServerService {
       }
 
       createThread(nick,thread,topic){
-        httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa(nick+":rup"));
-        console.log(httpOptions.headers[0]);
+        
+        
+        console.log('Authorization',"Basic " + btoa(nick + ":" +"user"));
         const req = this.http.post('http://127.0.0.1:8080/thread',
         {
           "content": thread,
@@ -127,17 +151,18 @@ export class ServerService {
           .subscribe(
             res => {
             console.log(topic);
-             
-            window.location.replace("http:///localhost:4200/" + topic);
+             this.callComponent();
+           // window.location.replace("http:///localhost:4200/" + topic);
             },
             err => {
               console.log("Error occured");
             }
           );
       }
-      like(){
-        console.log("beğeniye giriş");
-        const req = this.http.post('http://127.0.0.1:8080/likethread/3',{}
+      like(threadid){
+        
+        console.log(httpOptions.headers);
+        const req = this.http.post('http://127.0.0.1:8080/likethread/' + threadid,{}
         ,httpOptions
         
       )

@@ -17,7 +17,7 @@ export class SigninComponent implements OnInit {
   }
 
   signFunc(){
- 
+    this.server.signControl(this.nick,this.password);
   }
 
 }

@@ -11,13 +11,13 @@
 
       </div>
       <div id="detailsentry"  class="col-lg-6">
-      <div id="buttons"  class="col-lg-6">
+      <div id="buttons"  *ngIf="this.serverservice.signed!=null" class="col-lg-6">
 
-        <button (click)="likeFunc()" type="button" class="btn btn-success">+</button>
+        <button (click)="likeFunc(thread.id)" type="button" class="btn btn-success">+</button>
         <button type="button" class="btn btn-success">-</button>
     </div>
       <div  id="author"class="col">
-          {{thread.username}} 
+          <a (click)="toUsersProfile($event.target.innerText)">{{thread.username}}</a> 
 
       </div>
     </div>
@@ -25,4 +25,4 @@
 
 
 </div>
-<app-threadcreator id="entrycreator" *ngIf="topic!=null" (myEvent)="respawner()"></app-threadcreator>
+<app-threadcreator id="entrycreator" *ngIf="topic!=null && this.serverservice.signed!=null" (myEvent)="respawner()"></app-threadcreator>

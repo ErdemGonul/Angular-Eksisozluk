@@ -14,10 +14,10 @@ z-index:10;">
       
      
       <li class="listsign" style="font-family: 'Source Sans Pro',sans-serif;">
-          <ul><h4><a routerLink="register">Kayıt Ol</a></h4> </ul>
-          <ul><h4><a routerLink="signin">Giriş Yap</a></h4> </ul>
-          <ul><h4><a routerLink="createtopic">Topic Yarat</a></h4></ul>
-          
+          <ul *ngIf="this.serverservice.signed==null"><h4><a routerLink="register">Kayıt Ol</a></h4> </ul>
+          <ul *ngIf="this.serverservice.signed==null"><h4><a routerLink="signin">Giriş Yap</a></h4> </ul>
+          <ul *ngIf="this.serverservice.signed!=null"><h4><a routerLink="createtopic">Topic Yarat</a></h4></ul>
+          <ul *ngIf="this.serverservice.signed!=null"><h4 (click)="signout()"><a>Çıkış Yap</a></h4></ul>
       </li>
        
     </div>
@@ -26,12 +26,12 @@ z-index:10;">
      
 </div>
 <div class="row" id="container">
+        
     <div class="col-xs-6" id="leftbar">
         <app-topics></app-topics>
     </div>
     <div class="col-xs-6" id="inside">
         <router-outlet></router-outlet>
-       
     </div>
 </div>
 

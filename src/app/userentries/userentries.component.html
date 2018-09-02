@@ -1,0 +1,17 @@
+<div class="row"  style="margin-left:100px;">
+<h3 style="margin-bottom:70px;">{{username}}'ın   entryleri </h3>
+<div  class="row" id="threads" *ngFor="let entry of entries ;let i=index;" style="margin-left: 0px !important">
+  <h3 style="margin-bottom:55px;"><a routerLink="../{{topic}}" (click)="toTopic($event.target.innerText)" >{{entry.topicid}}</a></h3> 
+  <h4>{{entry.content}}</h4> 
+  <div id="detailsentry"  class="col-lg-6">
+      <div id="buttons"  *ngIf="this.serverservice.signed!=null" class="col-lg-6">
+
+        <button (click)="likeFunc(thread.id)" type="button" class="btn btn-success">+</button>
+        <button type="button" class="btn btn-success">-</button>
+    </div>
+      <div  id="author"class="col">
+          <a (click)="toUsersProfile($event.target.innerText)">{{entry.username}}</a> 
+
+      </div>
+  </div>
+</div>
