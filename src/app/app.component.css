@@ -9,11 +9,7 @@
 }
 a{
     color: white;
-}
-.col-xs-6{
-
-    height: 100px;
-}
+}   
 #leftbar {
     position: fixed;
     top: 140px;
@@ -25,15 +21,18 @@ a{
     overflow-y: scroll;
 }
 #container{
-    position: relative;
+    overflow: hidden;
     width: 100%;
+    box-sizing: border-box;
     margin: 0 auto;
     margin-left: 0px;
     margin-right: 0px;
     padding-left: 60px;
     margin-top:140px;
+  padding-bottom: 100px;
 }
 #inside{
+   
     margin-top: 0px;
     width:1000px;
     margin-left: 350px;

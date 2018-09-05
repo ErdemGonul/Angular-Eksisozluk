@@ -32,6 +32,7 @@ export class ServerService {
 
   constructor(private router:Router,  private http: HttpClient) { 
       this.signed=JSON.parse(localStorage.getItem("signed"));
+      if(this.signed!=null)
       httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa(this.signed.username+ ":" +this.signed.password)); 
   }
   signControl(nick,password){
@@ -42,9 +43,10 @@ export class ServerService {
           var token="Basic" + btoa(nick+": "+password);
           localStorage.setItem("signed",JSON.stringify({ "username": nick,"password":password, "token": token})); 
           this.signed=JSON.parse(localStorage.getItem("signed"));
+          if(this.signed!=null){
           httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa(this.signed.username + ":" + this.signed.password)); 
           this.router.navigateByUrl('/');
-        },
+        }},
         err => {
           console.log("Couldnt signed.");
         }
@@ -123,8 +125,8 @@ export class ServerService {
             console.log("Couldnt liked.");
           });
       }
-    readThreadsFromUser(username):Observable<any>{
-      return this.http.get("http://127.0.0.1:8080/thread/" + username);
+    readThreadsFromUser(username,page):Observable<any>{
+      return this.http.get("http://127.0.0.1:8080/thread/" + username + "?page=" + page);
     }
     getTopics():Observable<any>{
       return this.http.get('http://127.0.0.1:8080/topics').pipe(

@@ -1,4 +1,6 @@
-
+label{
+    font-size:20px;
+}
 .form-group > * {
     margin-top: 10px;
 }

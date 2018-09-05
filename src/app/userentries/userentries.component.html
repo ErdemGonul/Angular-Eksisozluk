@@ -14,4 +14,35 @@
 
       </div>
   </div>
+ 
 </div>
+<div class="row" id="pagecontroldiv">
+    <li class="pagecontroller">
+        <ul>
+            <button type="button"  (click)="toPreviousPage()"class="btn btn-success"><<</button>
+        </ul>
+        <ul>
+            <select class="custom-select my-1 mr-sm-2" [(ngModel)]="currentPage" >
+                <option *ngFor="let page of pages" [value]="page" (click)="toNthPage($event.target.innerText)">{{page}}</option>
+            </select>
+        </ul>
+        <ul>
+            <p>/</p>
+        </ul>
+        <ul>
+            <button type="button"  (click)="toNthPage($event.target.innerText)"class="btn btn-default">{{pages.length}}</button>
+        </ul>
+        <ul>
+        <button type="button"  (click)="toNextPage()"class="btn btn-success">>></button>
+        </ul>
+
+
+    </li>
+        
+       
+    
+    
+     
+
+          
+  </div>
