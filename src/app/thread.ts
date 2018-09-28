@@ -1,7 +1,7 @@
 export class Thread {
 
     username:string;
-    topicid:number;
+    topicName:number;
     content:string;
     id:number;
 }

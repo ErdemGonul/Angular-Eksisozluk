@@ -24,16 +24,26 @@ export class ServerService {
   signed;
   callTopicComponent=new Subject<any>();
   componentcalled=this.callTopicComponent.asObservable();
-
-
+  private theBoolean: BehaviorSubject<boolean>;
+  firstenter=true;
   callComponent(){
     this.callTopicComponent.next();
   }
 
   constructor(private router:Router,  private http: HttpClient) { 
+    this.theBoolean = new BehaviorSubject<boolean>(false);
       this.signed=JSON.parse(localStorage.getItem("signed"));
       if(this.signed!=null)
       httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa(this.signed.username+ ":" +this.signed.password)); 
+  }
+  ngOnInit(){
+
+  }
+  public setTheBoolean(newValue: boolean): void {
+    this.theBoolean.next(newValue);
+  }
+  public getTheBoolean(): Observable<boolean> {
+    return this.theBoolean.asObservable();
   }
   signControl(nick,password){
     httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa(nick + ":" + password));
@@ -53,18 +63,17 @@ export class ServerService {
       );
     }
 
-
-  
-
   createUser(nick,password){
     const req = this.http.post('http://127.0.0.1:8080/user', {
       "username": nick,
       "password": password
     })
       .subscribe(
-        res => {},
+        res => {
+          console.log("yaratıldı");
+        },
         err => {
-          console.log("Error occured");
+          console.log("yaradamadım");
         }
       );
     }
@@ -82,6 +91,8 @@ export class ServerService {
             this.topicid=topicname;
             this.createThread(thread,topicname)
             this.router.navigateByUrl(topicname);
+            
+            //window.location.replace('localhost:4200/' +topicname);
           },
           err => {
             console.log("Error occured");
@@ -96,8 +107,8 @@ export class ServerService {
           "topicName": topic,
           "username": this.signed.username
         },httpOptions
-      )
-          .subscribe(
+        )
+        .subscribe(
             res => {
              this.callComponent();
             },
@@ -105,13 +116,6 @@ export class ServerService {
               console.log("Error occured");
             });
       }
-
-      
-    
-      
-    ngOnInit(){
-
-    }
     like(threadid){
         
       const req = this.http.post('http://127.0.0.1:8080/likethread/' + threadid,{}
@@ -129,22 +133,8 @@ export class ServerService {
       return this.http.get("http://127.0.0.1:8080/thread/" + username + "?page=" + page);
     }
     getTopics():Observable<any>{
-      return this.http.get('http://127.0.0.1:8080/topics').pipe(
-  
-      map( result => {
-        
-          let data = JSON.stringify(result);
-          var x=JSON.parse(data);
-  
-          for (var i = 0, l = x.length; i < l; i++) {
-            if(!this.topiclist.includes(x[i].name)){
-            var obj = x[i].name;
-            this.topiclist.push(obj);
-            let urlTree = this.router.createUrlTree([obj]);
-        }}
-       return result;
-      })
-      );
+      console.log("ehh");
+      return this.http.get('http://127.0.0.1:8080/topics');
     }
     getThreads(x:string):Observable<any>{
       return this.http.get('http://127.0.0.1:8080/topic/' + x);  

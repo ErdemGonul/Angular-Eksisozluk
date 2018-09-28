@@ -16,7 +16,8 @@ export class AppComponent {
     }
    
   toMainPage(){
-    this.router.navigateByUrl('home');
+    window.location.replace('http://localhost:4200');
+    //this.router.navigateByUrl('home');
   }
 
   signout(){
