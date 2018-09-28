@@ -70,7 +70,7 @@ export class UserentriesComponent implements OnInit {
         entrylist.forEach(element => {
           var currentThread=new Thread();
           currentThread.username=element['username'];
-          currentThread.topicid=element['topicName'];
+          currentThread.topicName=element['topicName'];
           currentThread.content=element['content'];
           this.entries.push(currentThread);
         });
