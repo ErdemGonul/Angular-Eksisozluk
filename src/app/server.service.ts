@@ -91,8 +91,7 @@ export class ServerService {
             this.topicid=topicname;
             this.createThread(thread,topicname)
             this.router.navigateByUrl(topicname);
-            
-            //window.location.replace('localhost:4200/' +topicname);
+          
           },
           err => {
             console.log("Error occured");
@@ -110,7 +109,7 @@ export class ServerService {
         )
         .subscribe(
             res => {
-             this.callComponent();
+             window.location.reload();
             },
             err => {
               console.log("Error occured");

@@ -23,14 +23,12 @@ export class TopicComponentComponent implements OnInit {
   signed;
   subscriptionBool;
   subscriptionThread;
-  subscriptionRouter;
- onetime=false;
  
  
 
   constructor(private serverservice:ServerService,private router:Router,private http: HttpClient) {
     
-    this.subscriptionRouter=this.router.events.subscribe(params => {
+   this.router.events.subscribe(params => {
       if(params instanceof NavigationEnd) {
         this.threadlist=[];
         this.ngOnInit();
@@ -50,7 +48,7 @@ export class TopicComponentComponent implements OnInit {
       this.ngOnInit();
     });  
     
-    if((this.router.url=="/" || this.router.url=="/home") && this.onetime==false){
+    if((this.router.url=="/" || this.router.url=="/home")){
       this.subscriptionBool=this.serverservice.getTheBoolean().subscribe(value => {
 
         if(value==true){
