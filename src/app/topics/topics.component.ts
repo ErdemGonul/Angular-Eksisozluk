@@ -24,6 +24,7 @@ export class TopicsComponent implements OnInit {
   }
   
   toTopic(url){
+    console.log(url);
     this.serverservice.topicid=url;
 
   }
