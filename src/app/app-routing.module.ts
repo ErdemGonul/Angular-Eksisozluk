@@ -14,6 +14,7 @@ const routes: Routes = [
   {path:"user/:user",component:UserentriesComponent},
   {path: ":id", component: TopicComponentComponent},
   {path: "user/:user/:page", component: UserentriesComponent},
+  {path:":id/:page",component :TopicComponentComponent},
   
 ];
 @NgModule({

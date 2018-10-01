@@ -2,7 +2,7 @@
 <div>
   <div class="row">
       <li>
-        <ul> <h4>gündem</h4></ul>
+        <ul> <h4>bugün</h4></ul>
         <ul> <h4><a (click)="refresh()">yenile</a></h4></ul>
 
       </li>
@@ -12,7 +12,7 @@
   </div>
  
 <div  class="row" *ngFor="let topic of topics ;let i=index;">
-  <h4><a routerLink="../{{topic}}" (click)="toTopic($event.target.innerText)" >{{topic}}</a></h4> 
+  <h4><a  routerLink="../{{topic}}" (click)="toTopic($event.target.innerText)" >{{topic}}</a></h4> 
 
   </div>
 </div>

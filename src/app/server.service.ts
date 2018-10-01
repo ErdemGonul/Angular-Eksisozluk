@@ -22,13 +22,11 @@ export class ServerService {
   topiclist:string[]=[];
   topicid:string;
   signed;
-  callTopicComponent=new Subject<any>();
-  componentcalled=this.callTopicComponent.asObservable();
   private theBoolean: BehaviorSubject<boolean>;
+
   firstenter=true;
-  callComponent(){
-    this.callTopicComponent.next();
-  }
+  baseUrl="http://127.0.0.1:8080/";
+
 
   constructor(private router:Router,  private http: HttpClient) { 
     this.theBoolean = new BehaviorSubject<boolean>(false);
@@ -39,6 +37,7 @@ export class ServerService {
   ngOnInit(){
 
   }
+
   public setTheBoolean(newValue: boolean): void {
     this.theBoolean.next(newValue);
   }
@@ -48,7 +47,7 @@ export class ServerService {
   signControl(nick,password){
     httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa(nick + ":" + password));
     console.log(".agıırram");
-    const req = this.http.post('http://127.0.0.1:8080/login',{},httpOptions).subscribe(
+    const req = this.http.post(this.baseUrl +'login',{},httpOptions).subscribe(
         res => {
           var token="Basic" + btoa(nick+": "+password);
           localStorage.setItem("signed",JSON.stringify({ "username": nick,"password":password, "token": token})); 
@@ -64,7 +63,7 @@ export class ServerService {
     }
 
   createUser(nick,password){
-    const req = this.http.post('http://127.0.0.1:8080/user', {
+    const req = this.http.post(this.baseUrl + 'user', {
       "username": nick,
       "password": password
     })
@@ -80,7 +79,7 @@ export class ServerService {
 
     createTopic(topicname,thread){
      
-      const req = this.http.post('http://127.0.0.1:8080/topic',
+      const req = this.http.post(this.baseUrl +'topic',
       {
         "name":topicname,
         "createdBy": this.signed.username
@@ -100,7 +99,7 @@ export class ServerService {
 
       createThread(thread,topic){
 
-        const req = this.http.post('http://127.0.0.1:8080/thread',
+        const req = this.http.post(this.baseUrl +'thread',
         {
           "content": thread,
           "topicName": topic,
@@ -117,7 +116,7 @@ export class ServerService {
       }
     like(threadid){
         
-      const req = this.http.post('http://127.0.0.1:8080/likethread/' + threadid,{}
+      const req = this.http.post(this.baseUrl+'likethread/' + threadid,{}
       ,httpOptions        
     )
         .subscribe(
@@ -129,13 +128,22 @@ export class ServerService {
           });
       }
     readThreadsFromUser(username,page):Observable<any>{
-      return this.http.get("http://127.0.0.1:8080/thread/" + username + "?page=" + page);
+      return this.http.get(this.baseUrl+"thread/" + username + "?page=" + 0);
     }
     getTopics():Observable<any>{
       console.log("ehh");
-      return this.http.get('http://127.0.0.1:8080/topics');
+      return this.http.get(this.baseUrl +'topics');
     }
-    getThreads(x:string):Observable<any>{
-      return this.http.get('http://127.0.0.1:8080/topic/' + x);  
+    readMostRecentlyUpdatedTopics(): Observable<any>{
+      return this.http.get<any>(this.baseUrl + 'topics/recent');
+    }
+  
+    readRecentThreads(): Observable<any> {
+      return this.http.get<any>(this.baseUrl + 'threads/recent?page=0');
+    }
+  
+    getThreads(x:string,page:number):Observable<any>{
+      page--;
+      return this.http.get(this.baseUrl +'topic/' + x + '?page=' + page);  
     }
 }

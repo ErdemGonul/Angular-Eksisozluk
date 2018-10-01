@@ -6,7 +6,6 @@ import { Thread } from '../thread';
 import { Router } from '@angular/router';
 import { NavigationStart } from '@angular/router';
 import { NavigationEnd } from '@angular/router/';
-import { currentId } from 'async_hooks';
 
 @Component({
   selector: 'app-topic-component',
@@ -24,40 +23,45 @@ export class TopicComponentComponent implements OnInit {
   subscriptionBool;
   subscriptionThread;
  
- 
-
+  entries=[];
+  readThreadSubscription;
+  pages=[] as number[];
+  username;
+  currentPage=parseInt(this.router.url.slice(this.router.url.lastIndexOf('/')+1,this.router.url.length));
   constructor(private serverservice:ServerService,private router:Router,private http: HttpClient) {
-    
+    if(isNaN(this.currentPage)){
+      this.currentPage=1;
+    }
+   this.username="rup";
    this.router.events.subscribe(params => {
       if(params instanceof NavigationEnd) {
         this.threadlist=[];
+        console.log("girdiasdadadadam");
         this.ngOnInit();
       }
       });
 }
 
+refreshComponent(){
 
+
+}
  
-  ngOnInit() {
+ngOnInit() {
+  this.pages=[];
   this.serverservice.firstenter=false;
-
   this.topic=this.serverservice.topicid;
-  this.serverservice.componentcalled.subscribe(
-    () => {
-      this.router.navigateByUrl('/'+this.serverservice.topicid);
-      this.ngOnInit();
-    });  
-    
-    if((this.router.url=="/" || this.router.url=="/home")){
+
+    if((this.router.url=="/")){
       this.subscriptionBool=this.serverservice.getTheBoolean().subscribe(value => {
 
         if(value==true){
           this.serverservice.topicid=this.serverservice.topiclist[this.randomInitializer()];
           this.topic=this.serverservice.topicid;
   
-          this.subscriptionThread=this.serverservice.getThreads(this.topic).subscribe((threads) => {
+          this.subscriptionThread=this.serverservice.getThreads(this.topic,this.currentPage).subscribe((threads) => {
             if(threads!=null ){
-             threads.forEach(element => {
+             threads['threadDTOs'].forEach(element => {
                var currentThread=new Thread();
                currentThread=element;
                this.threadlist.push(currentThread);
@@ -71,18 +75,23 @@ export class TopicComponentComponent implements OnInit {
     );
     
   }
-  if(this.router.url!="/" && this.router.url!=""){
+  if(this.router.url!="/"){
 
     
      this.subscriptionBool=this.serverservice.getTheBoolean().subscribe(value => {
 
       if(value==true){
-  this.subscriptionThread=this.serverservice.getThreads(this.linkgetter()).subscribe((threads) => {
+  this.subscriptionThread=this.serverservice.getThreads(this.linkgetter(),this.currentPage).subscribe((threads) => {
     this.subscriptionThread.unsubscribe();
     if(threads!=null){
-    
+      if(threads['threadDTOs']!=null ){
+        for(var i=0;i<threads['totalPageCount'];i++){
+
+          this.pages.push(i+1);
+        }
+      }
     this.threadlist=[];
-    threads.forEach(element => {
+    threads['threadDTOs'].forEach(element => {
       this.serverservice.topicid=element.topicid;
       var currentThread=new Thread();
       currentThread=element;
@@ -108,17 +117,44 @@ export class TopicComponentComponent implements OnInit {
       return Math.floor((Math.random()*this.serverservice.topiclist.length));
    }
    linkgetter(){
-     var url= window.location.href.slice(window.location.href.lastIndexOf('/')+1,window.location.href.length);
+    var fullurl=window.location.href;
+    var url;
+    if((fullurl.match(new RegExp("/", "g")) || []).length>3){
+      url=fullurl.slice(fullurl.lastIndexOf('0')+2,fullurl.lastIndexOf('/'));
+    }
+    else{
+      url=fullurl.slice(fullurl.lastIndexOf('/')+1,fullurl.length);
+    }
      if(url=="")
         return null;
      else
         return url;
    }
    likeFunc(clickedobj){
-     console.log(clickedobj);
      this.serverservice.like(clickedobj);
    }
+   toTopic(url){
+    this.router.navigateByUrl("/" + url);
+  }
+  toNthPage(page){
+    this.currentPage=page;
+    this.router.navigate([this.topic,page]);
 
+  }
+  toNextPage(){
+    if(this.pages.includes(this.currentPage+1)){
+    this.currentPage++;
+    this.router.navigate([this.topic,this.currentPage]);
+
+    }
+  }
+  toPreviousPage(){
+    if(this.pages.includes(this.currentPage-1)){
+    this.currentPage--;
+    this.router.navigate([this.topic,this.currentPage]);
+
+    }
+  }
 
 
 }

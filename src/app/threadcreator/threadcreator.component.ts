@@ -3,7 +3,7 @@ import { ServerService } from 'src/app/server.service';
 import { Input } from '@angular/core';
 import { TopicComponentComponent } from 'src/app/topic-component/topic-component.component';
 import { Output } from '@angular/core';
-import { EventEmitter } from '@angular/core';
+
 
 @Component({
   selector: 'app-threadcreator',

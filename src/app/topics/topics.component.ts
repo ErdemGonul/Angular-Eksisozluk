@@ -16,11 +16,7 @@ export class TopicsComponent implements OnInit {
   doShow=true;
   onetime=false;
   constructor(private router:Router,private serverservice:ServerService,private route:ActivatedRoute) {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-       this.ngOnInit();
-      }
-   });
+
   }
   refresh(){
     console.log("yenilense");
@@ -29,11 +25,12 @@ export class TopicsComponent implements OnInit {
   
   toTopic(url){
     this.serverservice.topicid=url;
+
   }
   ngOnInit() {
 
     if(this.onetime==false){
-   this.subscriptionTopic=this.serverservice.getTopics().subscribe((result)=>{
+   this.subscriptionTopic=this.serverservice.readMostRecentlyUpdatedTopics().subscribe((result)=>{
     let data = JSON.stringify(result);
     var x=JSON.parse(data);
 

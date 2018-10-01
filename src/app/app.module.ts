@@ -21,7 +21,7 @@ import { UserentriesComponent } from './userentries/userentries.component';
     TopicsComponent,
     ThreadcreatorComponent,
     SigninComponent,
-    UserentriesComponent
+    UserentriesComponent,
   ],
   imports: [
     BrowserModule,
