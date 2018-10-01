@@ -30,7 +30,7 @@ export class TopicsComponent implements OnInit {
   }
   ngOnInit() {
 
-    if(this.onetime==false){
+    
    this.subscriptionTopic=this.serverservice.readMostRecentlyUpdatedTopics().subscribe((result)=>{
     let data = JSON.stringify(result);
     var x=JSON.parse(data);
@@ -47,9 +47,7 @@ export class TopicsComponent implements OnInit {
       this.topics=this.serverservice.topiclist;
       this.subscriptionTopic.unsubscribe();
     });
-  
-  this.onetime=true;
   }
   }
 
-}
+

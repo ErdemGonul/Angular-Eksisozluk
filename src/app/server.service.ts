@@ -18,7 +18,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ServerService {
-  
+  currentUrl;
   topiclist:string[]=[];
   topicid:string;
   signed;
@@ -29,6 +29,7 @@ export class ServerService {
 
 
   constructor(private router:Router,  private http: HttpClient) { 
+    this.currentUrl=window.location.href;
     this.theBoolean = new BehaviorSubject<boolean>(false);
       this.signed=JSON.parse(localStorage.getItem("signed"));
       if(this.signed!=null)
@@ -46,7 +47,6 @@ export class ServerService {
   }
   signControl(nick,password){
     httpOptions.headers= httpOptions.headers.set('Authorization',"Basic " + btoa(nick + ":" + password));
-    console.log(".agıırram");
     const req = this.http.post(this.baseUrl +'login',{},httpOptions).subscribe(
         res => {
           var token="Basic" + btoa(nick+": "+password);
@@ -88,9 +88,7 @@ export class ServerService {
         .subscribe(
           res => {
             this.topicid=topicname;
-            this.createThread(thread,topicname)
-            this.router.navigateByUrl(topicname);
-          
+            this.createThread(thread,topicname);
           },
           err => {
             console.log("Error occured");
@@ -108,7 +106,7 @@ export class ServerService {
         )
         .subscribe(
             res => {
-             window.location.reload();
+              this.router.navigateByUrl(topic);
             },
             err => {
               console.log("Error occured");

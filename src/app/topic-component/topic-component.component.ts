@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import{ServerService} from '../server.service';
+import {ServerService} from '../server.service';
 import { Thread } from '../thread';
 import { Router } from '@angular/router';
 import { NavigationStart } from '@angular/router';
@@ -26,37 +26,33 @@ export class TopicComponentComponent implements OnInit {
   entries=[];
   readThreadSubscription;
   pages=[] as number[];
-  username;
-  loopone=false;
+  username="rup";
   currentPage=parseInt(this.router.url.slice(this.router.url.lastIndexOf('/')+1,this.router.url.length));
   constructor(private serverservice:ServerService,private router:Router,private http: HttpClient) {
-    console.log(this.currentPage);
   
-   this.username="rup";
-   this.router.onSameUrlNavigation = 'reload';
-   this.router.events.subscribe(params => {
-    if (!(params instanceof NavigationEnd)) { return; }
-    console.log("girdiasdadadadam");
-    this.ngOnInit();
+  this.router.events.subscribe(params => {
+   
+    if ((params instanceof NavigationEnd) && this.serverservice.currentUrl!=window.location.href) {
+      this.serverservice.currentUrl=window.location.href;
       
-      });
+      console.log(this.serverservice.currentUrl,window.location.href);
+     
+      this.ngOnInit();
+    }    
+    });
 }
 
-refreshComponent(){
-
-
-}
- 
 ngOnInit() {
  
  
-  this.topic=this.serverservice.topicid;
 
   this.subscriptionBool=this.serverservice.getTheBoolean().subscribe(value => {
-  
+
   if(this.router.url=="/"){
-    console.log("girdq");
     this.serverservice.topicid=this.serverservice.topiclist[this.randomInitializer()];
+    this.topic=this.serverservice.topicid;
+  }
+  else{
     this.topic=this.serverservice.topicid;
   }
   if(isNaN(this.currentPage)){
@@ -64,6 +60,7 @@ ngOnInit() {
   }
   if(value==true){
     this.subscriptionThread=this.serverservice.getThreads(this.topic,this.currentPage).subscribe((threads) => {
+     console.log(this.topic);
       if(threads!=null){
         if(threads['threadDTOs']!=null ){
           this.pages=[];
@@ -110,9 +107,6 @@ ngOnInit() {
    likeFunc(clickedobj){
      this.serverservice.like(clickedobj);
    }
-   toTopic(url){
-    this.router.navigateByUrl("/" + url);
-  }
   toNthPage(page){
     this.currentPage=page;
     this.router.navigate([this.topic,page]);
@@ -122,7 +116,6 @@ ngOnInit() {
     if(this.pages.includes(this.currentPage+1)){
     this.currentPage++;
     this.router.navigate([this.topic,this.currentPage]);
-
     }
   }
   toPreviousPage(){

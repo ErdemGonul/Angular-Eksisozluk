@@ -1,43 +1,44 @@
 <!--The content below is only a placeholder and can be replaced.-->
-
 <div  class="jumbotron" style="margin-top: 0%;padding-top: 0%;padding-bottom:0%;background-color:grey;position: fixed;
-top: 0;
-left: 0;
-right: 0;
-z-index:10;">
-  <div class="row" style="margin-right:0px;">
-   <div class="col-xs-6">
-    <h1  style="font-size: 50px;margin-bottom: 15px;margin-left:50px;"><a (click)="toMainPage()">ekşi sözlük</a></h1>
-
-  
-  </div>
-    <div class="col" style="margin-top:30px;margin-bottom:10px;text-align:right;padding-right:50px">
-      
-     
-      <li class="listsign" style="font-family: 'Source Sans Pro',sans-serif;">
-          <ul *ngIf="this.serverservice.signed==null"><h4><a routerLink="register">Kayıt Ol</a></h4> </ul>
-          <ul *ngIf="this.serverservice.signed==null"><h4><a routerLink="signin">Giriş Yap</a></h4> </ul>
-          <ul *ngIf="this.serverservice.signed!=null"><h4><a routerLink="createtopic">Topic Yarat</a></h4></ul>
-          <ul *ngIf="this.serverservice.signed!=null"><h4 (click)="signout()"><a>Çıkış Yap</a></h4></ul>
-      </li>
-       
-    </div>
-    </div>
-
-     
+   top: 0;
+   left: 0;
+   right: 0;
+   z-index:10;">
+   <div class="row" style="margin-right:0px;">
+      <div class="col-md-4">
+         <h1  style="font-size: 50px;margin-bottom: 15px;margin-left:50px;"><a (click)="toMainPage()">ekşi sözlük</a></h1>
+      </div>
+      <div class="col-md-4" >
+         <li class="searchclass">
+            <ul style="width:400px;">  <input [(ngModel)]="searchkeyword" (keyup)="$event.keyCode==13"
+               class="form-control form-control-lg" placeholder="ara" id="inputLarge" type="text">
+            </ul>
+            <ul>  <button (click)="search()" type="button" class="btn btn-success">ara</button></ul>
+         </li>
+      </div>
+      <div class="col-md-4" style="margin-top:30px;margin-bottom:10px;text-align:right;padding-right:50px">
+         <li class="listsign" style="font-family: 'Source Sans Pro',sans-serif;">
+            <ul *ngIf="this.serverservice.signed==null">
+               <h4><a routerLink="register">Kayıt Ol</a></h4>
+            </ul>
+            <ul *ngIf="this.serverservice.signed==null">
+               <h4><a routerLink="signin">Giriş Yap</a></h4>
+            </ul>
+            <ul *ngIf="this.serverservice.signed!=null">
+               <h4><a routerLink="createtopic">Topic Yarat</a></h4>
+            </ul>
+            <ul *ngIf="this.serverservice.signed!=null">
+               <h4 (click)="signout()"><a>Çıkış Yap</a></h4>
+            </ul>
+         </li>
+      </div>
+   </div>
 </div>
-
 <div id="container">
-        
-    <div class="col-xs-6" id="leftbar">
-        <app-topics></app-topics>
-    </div>
-    <div class="col-xs-6" id="inside">
-        <router-outlet></router-outlet>
-    </div>
+   <div class="col-xs-6" id="leftbar">
+      <app-topics></app-topics>
+   </div>
+   <div class="col-xs-6" id="inside">
+      <router-outlet></router-outlet>
+   </div>
 </div>
-
-
-
-
-

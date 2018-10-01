@@ -1,58 +1,39 @@
-
 <div class="topicholder">
-    
-   
-    <h2>{{topic}}</h2>
-    <div class="threads" *ngFor="let thread of threadlist;let i=index">
-        
-       
-      <div id="entry" class="row">
-          {{thread.content}}
-
-      </div>
-      <div id="detailsentry"  class="col-lg-6">
-      <div id="buttons"  *ngIf="this.serverservice.signed!=null" class="col-lg-6">
-
-        <button (click)="likeFunc(thread.id)" type="button" class="btn btn-success">+</button>
-        <button type="button" class="btn btn-success">-</button>
-    </div>
-      <div  id="author"class="col">
-          <a (click)="toUsersProfile($event.target.innerText)">{{thread.username}}</a> 
-
-      </div>
-    </div>
-       </div>
-
-
-</div>
-<app-threadcreator id="entrycreator" *ngIf="topic!=null && this.serverservice.signed!=null"></app-threadcreator>
-<div class="row" id="pagecontroldiv">
-    <li class="pagecontroller">
-        <ul>
-            <button type="button"  (click)="toPreviousPage()"class="btn btn-success"><<</button>
-        </ul>
-        <ul>
-            <select class="custom-select my-1 mr-sm-2" [(ngModel)]="currentPage" >
-                <option *ngFor="let page of pages" [value]="page" (click)="toNthPage($event.target.innerText)">{{page}}</option>
-            </select>
-        </ul>
-        <ul>
-            <p>/</p>
-        </ul>
-        <ul>
-            <button type="button"  (click)="toNthPage($event.target.innerText)"class="btn btn-default">{{pages.length}}</button>
-        </ul>
-        <ul>
-        <button type="button"  (click)="toNextPage()"class="btn btn-success">>></button>
-        </ul>
-
-
-    </li>
-        
-       
-    
-    
-     
-
-          
-  </div>
+        <h2>{{topic}}</h2>
+        <div class="threads" *ngFor="let thread of threadlist;let i=index">
+           <div id="entry" class="row">
+              {{thread.content}}
+           </div>
+           <div id="detailsentry"  class="col-lg-6">
+              <div id="buttons"  *ngIf="this.serverservice.signed!=null" class="col-lg-6">
+                 <button (click)="likeFunc(thread.id)" type="button" class="btn btn-success">+</button>
+                 <button type="button" class="btn btn-success">-</button>
+              </div>
+              <div  id="author"class="col">
+                 <a (click)="toUsersProfile($event.target.innerText)">{{thread.username}}</a> 
+              </div>
+           </div>
+        </div>
+     </div>
+     <app-threadcreator id="entrycreator" *ngIf="topic!=null && this.serverservice.signed!=null"></app-threadcreator>
+     <div class="row" id="pagecontroldiv">
+        <li class="pagecontroller">
+           <ul>
+              <button type="button"  (click)="toPreviousPage()"class="btn btn-success"><<</button>
+           </ul>
+           <ul>
+              <select class="custom-select my-1 mr-sm-2" [(ngModel)]="currentPage" >
+              <option *ngFor="let page of pages" [value]="page" (click)="toNthPage($event.target.innerText)">{{page}}</option>
+              </select>
+           </ul>
+           <ul>
+              <p>/</p>
+           </ul>
+           <ul>
+              <button type="button"  (click)="toNthPage($event.target.innerText)"class="btn btn-default">{{pages.length}}</button>
+           </ul>
+           <ul>
+              <button type="button"  (click)="toNextPage()"class="btn btn-success">>></button>
+           </ul>
+        </li>
+     </div>
